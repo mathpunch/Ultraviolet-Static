@@ -28,6 +28,7 @@
       <p>Ultraviolet is highly sophisticated proxy used for evading internet censorship.</p>
     </div>
 
+    <!-- Updated form -->
     <form id="uv-form" class="flex-center">
       <input
         id="uv-search-engine"
@@ -36,10 +37,12 @@
       />
       <input id="uv-address" type="text" placeholder="Search the web freely" />
     </form>
+
     <div class="desc left-margin">
       <p id="uv-error"></p>
       <pre id="uv-error-code"></pre>
     </div>
+
     <footer>
       <div>
         <a title="The TitaniumNetwork GitHub organization" href="https://github.com/titaniumnetwork-dev">TitaniumNetwork</a>
@@ -55,7 +58,7 @@
     <iframe style="display: none;" id="uv-frame"></iframe>
 
     <script>
-      // Prevent form submission and handle proxy logic
+      // Prevent form submission and handle proxy logic using the repository's proxy
       document.getElementById("uv-form").addEventListener("submit", function(event) {
         event.preventDefault(); // Prevents page refresh
 
@@ -63,16 +66,11 @@
 
         // If URL is entered
         if (inputUrl) {
-          // Check if URL already has a protocol (http or https)
-          const formattedUrl = inputUrl.startsWith("http://") || inputUrl.startsWith("https://")
-            ? inputUrl
-            : "http://" + inputUrl;
+          // Use the proxy to handle URL input
+          const proxiedUrl = `https://your-deployed-ultraviolet-proxy-url.com/${encodeURIComponent(inputUrl)}`;
 
-          // Check if the proxy is enabled and redirect through the proxy
-          const proxyUrl = `https://your-proxy-domain.com/${encodeURIComponent(formattedUrl)}`; // Replace with your proxy URL
-          
-          // Redirect to the proxied URL
-          window.location.href = proxyUrl;
+          // Make sure the proxy URL is accessible
+          window.location.href = proxiedUrl;
         } else {
           // Show an error message if no URL is entered
           document.getElementById("uv-error").textContent = "Please enter a valid URL.";
